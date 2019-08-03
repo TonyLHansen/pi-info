@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# Apache 2 License
+
+# With thanks and appreciation to Matt at Raspberry Spy's blog post at,
+# that provided some of the information gathered here.
+#  http://www.raspberrypi-spy.co.uk/2012/09/checking-your-raspberry-pi-board-version/
+
+rev=`awk '/^Revision/ { print $NF }' < /proc/cpuinfo`
+case "$rev" in
+    0002 ) echo -n "Model B Revision 1.0 256MB" ;;
+    0003 ) echo -n "Model B Revision 1.0 + ECN0001 (no fuses, D14 removed) 256MB" ;;
+    0004 ) echo -n "Model B Revision 2.0 with Mounting holes 256MB" ;;
+    0007 ) echo -n "Model A with Mounting holes 256MB" ;;
+    000d | \
+    000e | \
+    000f ) echo -n "Model B Revision 2.0 with Mounting holes 512MB" ;;
+    0010 ) echo -n "Model B+ 512MB" ;;
+    0011 ) echo -n "Compute Module 512MB" ;;
+    0012 ) echo -n "Model A+ 256MB" ;;
+    a01041 ) echo -n "Pi 2 Model B (Sony, UK) 1GB" ;;
+    a21041 ) echo -n "Pi 2 Model B (Embest, China) 1GB" ;;
+    900092 ) echo -n "PiZero 512MB v1.0-1.2" ;;
+    900093 ) echo -n "PiZero 512MB v1.3" ;;
+    a02082 ) echo -n "Pi 3 Model B 1GB (Sony, UK)" ;;
+    a22082 ) echo -n "Pi 3 Model B 1GB (Embest, China)" ;;
+    a020d3 ) echo -n "Pi 3 Model B+ 1GB (Sony, UK)" ;;
+    a03111 ) echo -n "Pi 4 1GB (Sony, UK)" ;;
+    b03111 ) echo -n "Pi 4 2GB (Sony, UK)" ;;
+    c03111 ) echo -n "Pi 4 4GB (Sony, UK)" ;;
+    * ) echo -n "Unknown PI version - $rev" ;;
+esac
+if [ -f /proc/device-tree/model ]
+then echo -n " [" $(tr -d '\0' < /proc/device-tree/model) "]"
+fi
+cpu=`grep -i "^processor" /proc/cpuinfo | wc -l`
+case $cpu in
+    1 ) echo -n " 1 CPU" ;;
+    * ) echo -n " $cpu CPUs" ;;
+esac
+
+. /etc/os-release
+echo " $NAME $VERSION"
