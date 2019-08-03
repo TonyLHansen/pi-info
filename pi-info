@@ -1,8 +1,11 @@
 #!/bin/bash
 
-# Apache 2 License
+# Author Tony Hansen
+#
+# This script is made available under an Apache 2 License.
+# See the file LICENSE for details.
 
-# With thanks and appreciation to Matt at Raspberry Spy's blog post at,
+# With thanks and appreciation to a blog post by Matt at Raspberry Spy
 # that provided some of the information gathered here.
 #  http://www.raspberrypi-spy.co.uk/2012/09/checking-your-raspberry-pi-board-version/
 
